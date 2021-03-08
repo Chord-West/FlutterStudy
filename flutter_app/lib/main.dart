@@ -1,36 +1,73 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
-
-class RandomWordsState extends State<RandomWords> {
-  @override
-  Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return Text(wordPair.asPascalCase);
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  RandomWordsState createState() => RandomWordsState();
-}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: ScaffoldSample(),
+    );
+  }
+}
+
+class ScaffoldSample extends StatefulWidget {
+  @override
+  _ScaffoldSampleState createState() => _ScaffoldSampleState();
+}
+
+class _ScaffoldSampleState extends State<ScaffoldSample> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 상단 앱 바
+      appBar: AppBar(
+        title: Text(
+          'Appname',
+          style: TextStyle(color: Colors.black),
         ),
-        body: Center(
-          child: RandomWords(),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.green),
+      ),
+
+      body: Center(
+        child: TextField(),
+      ),
+      endDrawer: Drawer(
+        child: Center(
+          child: Text("슬라이드 메뉴"),
         ),
+      ),
+      //  옆으로 밀기로 햄버거 바 메뉴 열기 불가능
+
+      drawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: false,
+
+      resizeToAvoidBottomInset: false, // 밑에 키보드가 열릴 때 floating 버튼이 안따라옴
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.edit),
+        backgroundColor: Colors.green,
+        onPressed: () {
+          print("click edit button");
+        },
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        onTap: (index) {
+          print(index);
+        },
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.mail), label: "Messages"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
       ),
     );
   }
